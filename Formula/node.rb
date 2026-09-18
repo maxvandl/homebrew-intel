@@ -1,14 +1,18 @@
-# Готовый x86_64 Node.js, кросс-собранный нативно на Apple Silicon скриптом
-# scripts/build-node-x86_64.sh. В отличие от формулы homebrew-core,
-# собран со встроенными зависимостями (openssl, icu, libuv, ...), как
-# официальные бинарники nodejs.org, поэтому не тянет 18 x86_64-библиотек.
+# Официальная сборка Node.js darwin-x64 с nodejs.org (без пересборки).
+# Как и официальные бинарники, со встроенными openssl/icu/libuv и npm.
+# Обновление: поменять version и sha256 (из https://nodejs.org/dist/vX.Y.Z/SHASUMS256.txt).
 class Node < Formula
-  desc "Platform built on V8 to build network applications (prebuilt x86_64 keg)"
+  desc "Platform built on V8 to build network applications (official darwin-x64 binary)"
   homepage "https://nodejs.org/"
-  url "https://github.com/maxvandl/homebrew-intel/releases/download/node-26.8.2/node-26.8.2-x86_64-macos.tar.gz"
-  version "26.8.2"
-  sha256 "1cf8a925f233893b35ec98e718a8d1c912c175302cc408daaec84edfdb53c161"
+  url "https://nodejs.org/dist/v26.9.0/node-v26.9.0-darwin-x64.tar.gz"
+  version "26.9.0"
+  sha256 "06b2e742ed9025dc84adc830243b3f731956eac9c321bccd0ede384209af02a8"
   license "MIT"
+
+  livecheck do
+    url "https://nodejs.org/dist/index.json"
+    regex(/"version":\s*"v?(\d+(?:\.\d+)+)"/i)
+  end
 
   link_overwrite "bin/npm", "bin/npx"
 
@@ -16,6 +20,7 @@ class Node < Formula
   depends_on :macos
 
   def install
+    rm_f %w[CHANGELOG.md README.md]
     prefix.install Dir["*"]
 
     # npm живёт в libexec, как у Homebrew; в bin временные симлинки до post_install
