@@ -1,11 +1,11 @@
 # Готовый x86_64 Node.js, кросс-собранный нативно на Apple Silicon скриптом
-# /Users/lin/llvm/build-node-x86_64.sh. В отличие от формулы homebrew-core,
+# scripts/build-node-x86_64.sh. В отличие от формулы homebrew-core,
 # собран со встроенными зависимостями (openssl, icu, libuv, ...), как
 # официальные бинарники nodejs.org, поэтому не тянет 18 x86_64-библиотек.
 class Node < Formula
   desc "Platform built on V8 to build network applications (prebuilt x86_64 keg)"
   homepage "https://nodejs.org/"
-  url "file:///Users/lin/llvm/node/node-26.8.2.x86_64.tar.gz"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/node-26.8.2/node-26.8.2-x86_64-macos.tar.gz"
   version "26.8.2"
   sha256 "1cf8a925f233893b35ec98e718a8d1c912c175302cc408daaec84edfdb53c161"
   license "MIT"

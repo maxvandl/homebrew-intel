@@ -1,11 +1,11 @@
 # Готовый x86_64 LLVM 22, кросс-собранный нативно на Apple Silicon
-# скриптом /Users/lin/llvm/build-x86_64.sh. Homebrew больше не публикует
+# скриптом scripts/build-llvm-x86_64.sh. Homebrew больше не публикует
 # x86_64-бутылки llvm@22 для macOS, а сборка из исходников под Rosetta
 # занимает много часов. Формула просто раскладывает готовый keg.
 class LlvmAT22 < Formula
   desc "Next-gen compiler infrastructure (prebuilt x86_64 keg)"
   homepage "https://llvm.org/"
-  url "file:///Users/lin/llvm/llvm@22-22.1.8.x86_64.tar.gz"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/llvm-22.1.8/llvm-22.1.8-x86_64-macos.tar.gz"
   version "22.1.8"
   sha256 "192e908f2c95ad3013848e2bc83a2f9c1667270e172ee7200716455095e8b3e7"
   license "Apache-2.0 WITH LLVM-exception"
