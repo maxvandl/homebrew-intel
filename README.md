@@ -22,6 +22,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | Formula   | Version | Notes |
 |-----------|---------|-------|
 | `llvm@22` | 22.1.8  | clang, clang-tools-extra, mlir, polly, compiler-rt, libc++, libunwind. Keg-only, like upstream. Writes clang config files with `-isysroot` and `-B` to the CLT linker so it works under Rosetta. |
+| `glib`    | 2.90.0  | With built-in GIRepository/typelibs (introspection enabled), links Intel-brew `gettext` and `pcre2`. Built against the macOS 26 SDK (CLT 27 ships SDK 27, whose weak `pipe2` breaks glib on macOS 26). |
 | `node`    | 26.8.2  | Bundled openssl/icu/libuv (like nodejs.org binaries) instead of 18 shared Homebrew libs. npm 11.19.1 included. |
 
 ## Rebuilding
