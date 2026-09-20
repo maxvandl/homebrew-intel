@@ -23,10 +23,19 @@ cask "psi-plus" do
 
   app "Psi+.app"
 
+  # Ad-hoc signed without an Apple Developer ID. On current macOS that is not
+  # merely a Gatekeeper prompt: the quarantined bundle is judged "damaged" and
+  # relocated to the Trash on first launch. Homebrew 7 dropped
+  # --no-quarantine, so strip the attribute here instead.
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Psi+.app"]
+  end
+
   caveats <<~EOS
-    These builds are ad-hoc signed and not notarized, so Gatekeeper will
-    refuse the first launch. Open it once via right-click -> Open, or:
-      xattr -dr com.apple.quarantine "/Applications/Psi+.app"
+    This build is ad-hoc signed and not notarized. The cask removes the
+    quarantine attribute after install so macOS will run it; notarizing with
+    an Apple Developer ID is the proper fix.
   EOS
 
   zap trash: [
