@@ -36,11 +36,13 @@ Unlike the formulae above, these are app bundles and are installed with the
 ```bash
 brew tap maxvandl/intel
 brew install --cask maxvandl/intel/psi-plus
+brew install --cask maxvandl/intel/mobarust
 ```
 
 | Cask       | Version   | Notes |
 |------------|-----------|-------|
 | `psi-plus` | 1.5.2182  | Psi+ XMPP client, built from `psi-plus/psi-plus-snapshots`. Separate arm64 and x86_64 disk images, selected via `on_arm`/`on_intel`. The arm64 build links Qt 6.11.2 from `/opt/homebrew`; the x86_64 build links Qt 6.7.3 from `/usr/local`, since Homebrew ships no x86_64 bottle of Qt 6.11.2 for macOS 27. Ad-hoc signed and **not notarized**, so Gatekeeper blocks the first launch (the reason homebrew-cask disabled its own `psi-plus` on 2026-09-01). |
+| `mobarust` | 0.1.1     | MobaRust SSH/SFTP terminal workspace, a free MobaXterm alternative. Unlike `psi-plus`, nothing is built here: upstream `OthmaneBlial/MobaRust` already publishes arm64 and x86_64 disk images, so the cask points straight at them. Upstream ships it ad-hoc signed and **not notarized**, and tags the release a GitHub pre-release, so `brew audit --online` reports one expected pre-release finding. |
 
 ## Rebuilding
 
