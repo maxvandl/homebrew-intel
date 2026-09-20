@@ -28,6 +28,20 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `openjdk` | 27      | Azul Zulu OpenJDK 27.0.0 macOS x64 build, laid out like homebrew-core `openjdk` (`libexec/openjdk.jdk`). No build needed. |
 | `node`    | 26.9.0  | Official darwin-x64 binary from nodejs.org, repackaged as a keg (npm included). No build needed. |
 
+## Casks
+
+Unlike the formulae above, these are app bundles and are installed with the
+**arm64** Homebrew in `/opt/homebrew` (the cask picks the matching slice):
+
+```bash
+brew tap maxvandl/intel
+brew install --cask maxvandl/intel/psi-plus
+```
+
+| Cask       | Version   | Notes |
+|------------|-----------|-------|
+| `psi-plus` | 1.5.2182  | Psi+ XMPP client, built from `psi-plus/psi-plus-snapshots`. Separate arm64 and x86_64 disk images, selected via `on_arm`/`on_intel`. The arm64 build links Qt 6.11.2 from `/opt/homebrew`; the x86_64 build links Qt 6.7.3 from `/usr/local`, since Homebrew ships no x86_64 bottle of Qt 6.11.2 for macOS 27. Ad-hoc signed and **not notarized**, so Gatekeeper blocks the first launch (the reason homebrew-cask disabled its own `psi-plus` on 2026-09-01). |
+
 ## Rebuilding
 
 `node` and `openjdk` need no build: bump `version`/`sha256` in the formula from nodejs.org.
