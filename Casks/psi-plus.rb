@@ -2,17 +2,19 @@
 # Two separate builds rather than one universal binary: Homebrew ships no
 # x86_64 bottle of Qt 6.11.2 for macOS 27, so the Intel slice is linked
 # against the Qt 6.7.3 already present in the Intel prefix.
+# Built with ENABLE_PLUGINS=ON: bundles all 27 stock generic plugins except
+# otrplugin (needs QCA3-qt6, unavailable in Homebrew).
 # Ad-hoc signed, not notarized - see caveats.
 cask "psi-plus" do
   version "1.5.2182"
 
   on_arm do
-    sha256 "2e1b8e8037f4ad08d67c389e57480e45bb4a110f09983da82ad405a82f1f302c"
+    sha256 "de9775165520c52417904af26c2ea7eebacd38b158a62bddf217ace408ffd3e7"
 
     url "https://github.com/maxvandl/homebrew-intel/releases/download/psi-plus-#{version}/psi-plus-#{version}-arm64.dmg"
   end
   on_intel do
-    sha256 "8dc4101df8877991c7aa7bb7c06e9df69a4d7a547c1b3c2bf2c86be449983ac2"
+    sha256 "cfec958999f089dbefc6c3662c3a20fc110290be0ad3654739be645e96ff78ed"
 
     url "https://github.com/maxvandl/homebrew-intel/releases/download/psi-plus-#{version}/psi-plus-#{version}-x86_64.dmg"
   end
