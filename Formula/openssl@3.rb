@@ -9,8 +9,8 @@ class OpensslAT3 < Formula
   sha256 "479d880e8cd1a081b2fcf5a1f65025cbb39e332c2ef0fce35a0a00cf11026435"
   license "Apache-2.0"
 
-  depends_on "ca-certificates"
   depends_on arch: :x86_64
+  depends_on "ca-certificates"
   depends_on :macos
 
   link_overwrite "bin/c_rehash", "bin/openssl", "include/openssl/*", "lib/libcrypto*", "lib/libssl*",
