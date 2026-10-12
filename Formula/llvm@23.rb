@@ -5,8 +5,8 @@
 class LlvmAT23 < Formula
   desc "Next-gen compiler infrastructure (prebuilt x86_64 keg)"
   homepage "https://llvm.org/"
-  url "https://github.com/maxvandl/homebrew-intel/releases/download/llvm-23.1.1/llvm-23.1.1-x86_64-macos.tar.gz"
-  sha256 "f6ead706c43df572f0f3ee9a5dc06ba299114be94b07e772ad78c4976c2fd8cb"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/llvm-23.1.3/llvm-23.1.3-x86_64-macos.tar.gz"
+  sha256 "18d2eb82faf90f0be5540ebbeff85124a0cfe4beb8e9989d05f881ccffac043a"
   license "Apache-2.0" => { with: "LLVM-exception" }
 
   keg_only :versioned_formula

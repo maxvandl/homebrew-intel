@@ -1,16 +1,16 @@
 #!/bin/bash
-# Нативная кросс-сборка LLVM 23.1.1 под x86_64 macOS на Apple Silicon (M2).
+# Нативная кросс-сборка LLVM 23.1.3 под x86_64 macOS на Apple Silicon (M2).
 # Компилятор — arm64 (Apple clang), результат — x86_64. Rosetta нужна только
 # чтобы cmake мог запускать тестовые x86_64-бинарники на этапе configure.
 set -euo pipefail
 
-VER=23.1.1
+VER=23.1.3
 ROOT=/Users/lin/llvm
 SRC=$ROOT/llvm-project-$VER.src
-BUILD=$ROOT/build-x86_64-23
+BUILD=$ROOT/build-x86_64-233
 PREFIX=/usr/local/Cellar/llvm@23/$VER  # как у Homebrew (std_cmake_args); реальная установка идёт в STAGE
-STAGE=$ROOT/stage-23
-NATIVE=/opt/homebrew/opt/llvm/bin      # arm64 llvm 23.1.1: отсюда берём tblgen'ы (та же версия!)
+STAGE=$ROOT/stage-233
+NATIVE=/opt/homebrew/opt/llvm/bin      # arm64 llvm 23.1.3: отсюда берём tblgen'ы (та же версия!)
 CLT=$(xcode-select -p)                 # runtimes собирает свежий x86_64 clang под Rosetta; /usr/bin/ld (xcrun-shim)
                                        # там не работает, поэтому указываем настоящий ld через -B
 
