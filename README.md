@@ -86,6 +86,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `mole` | 1.67.0 | Deep clean and optimize your Mac. |
 | `curl` | 8.23.0 | Get a file from an HTTP, HTTPS or FTP server. |
 | `flock` | 0.4.0 | Lock file during command. |
+| `libevent` | 2.1.13 | Asynchronous event library. |
 
 ## Casks
 
