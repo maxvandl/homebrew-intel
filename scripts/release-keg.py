@@ -18,6 +18,7 @@ ap.add_argument("--install", default=None, help="тело def install (по ум
 ap.add_argument("--extra", default=None, help="строки DSL после depends_on (link_overwrite, post_install_steps...)")
 ap.add_argument("--notes", default="")
 ap.add_argument("--no-push", action="store_true")
+ap.add_argument("--deps", default=None, help="список зависимостей через пробел вместо core (\"\" — без зависимостей)")
 a = ap.parse_args()
 
 def run(cmd, **kw):
@@ -56,7 +57,7 @@ desc = desc + suffix if len(desc) + len(suffix) < 80 else desc
 lic = info.get("license") or ""
 tap_formulae = {f[:-3] for f in os.listdir(f"{TAP}/Formula")} | {a.name}
 deps = []
-for d in info["dependencies"]:
+for d in (a.deps.split() if a.deps is not None else info["dependencies"]):
     deps.append(f"maxvandl/intel/{d}" if d in tap_formulae else d)
 lines = [f"# Готовый x86_64 keg {a.name} {a.version}, кросс-собранный нативно на Apple Silicon",
          f"# скриптом {a.script} (параметры как у формулы homebrew-core).",
