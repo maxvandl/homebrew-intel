@@ -39,6 +39,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `brotli` | 1.2.1 | Generic-purpose lossless compression algorithm by Google. |
 | `jpeg-turbo` | 3.2.1 | JPEG image codec that aids compression and decompression. |
 | `icu4c@78` | 78.3 | C/C++ and Java libraries for Unicode and globalization. |
+| `fribidi` | 1.0.18 | Implementation of the Unicode BiDi algorithm. |
 
 ## Casks
 

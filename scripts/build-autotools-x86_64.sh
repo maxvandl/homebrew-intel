@@ -15,7 +15,13 @@ STAGE=$ROOT/$NAME/stage
 CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT
 
 export SDKROOT=$CLT/SDKs/MacOSX26.sdk     # не SDK 27 из CLT 27: слабые символы (pipe2 и т.п.) ломают рантайм на macOS 26
-export PATH=$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
+# инструменты arm64-brew с нативными модулями (perl/python) под Rosetta не грузятся:
+# обёртки запускают их как arm64 (arch -arm64)
+ARMBIN=$ROOT/deps/armbin; mkdir -p "$ARMBIN"
+for t in help2man; do
+  printf '#!/bin/sh\nexec arch -arm64 /opt/homebrew/bin/%s "$@"\n' "$t" > "$ARMBIN/$t"; chmod +x "$ARMBIN/$t"
+done
+export PATH=$ARMBIN:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export CC="$CLT/usr/bin/clang -arch x86_64" CXX="$CLT/usr/bin/clang++ -arch x86_64"
 export MACOSX_DEPLOYMENT_TARGET=26.0
 export PKG_CONFIG=/opt/homebrew/bin/pkgconf
