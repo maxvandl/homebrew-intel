@@ -10,13 +10,13 @@ class Harfbuzz < Formula
   license "MIT"
 
   depends_on arch: :x86_64
-  depends_on :macos
-  depends_on "maxvandl/intel/cairo"
   depends_on "freetype"
-  depends_on "maxvandl/intel/glib"
   depends_on "graphite2"
   depends_on "icu4c@76"
   depends_on "libpng"
+  depends_on :macos
+  depends_on "maxvandl/intel/cairo"
+  depends_on "maxvandl/intel/glib"
 
   def install
     prefix.install Dir["*"]

@@ -11,8 +11,8 @@ class Glib < Formula
   license "LGPL-2.1-or-later"
 
   depends_on arch: :x86_64
-  depends_on :macos
   depends_on "gettext"
+  depends_on :macos
   depends_on "pcre2"
   uses_from_macos "libffi"
 
@@ -25,15 +25,15 @@ class Glib < Formula
               "giomoduledir=${libdir}/gio/modules"
     inreplace lib/"pkgconfig/glib-2.0.pc" do |s|
       s.gsub! "Libs: -L${libdir} -lglib-2.0 -lintl",
-              "Libs: -L${libdir} -lglib-2.0 -L#{Formula["gettext"].opt_lib} -lintl"
+              "Libs: -L${libdir} -lglib-2.0 -L#{formula_opt_lib("gettext")} -lintl"
       s.gsub! "Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include",
-              "Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include -I#{Formula["gettext"].opt_include}"
+              "Cflags: -I${includedir}/glib-2.0 -I${libdir}/glib-2.0/include -I#{formula_opt_include("gettext")}"
     end
     bash_completion.install (share/"bash-completion/completions").children
   end
 
-  def post_install
-    (HOMEBREW_PREFIX/"lib/gio/modules").mkpath
+  post_install_steps do
+    mkdir_p "lib/gio/modules", base: :homebrew_prefix
   end
 
   test do

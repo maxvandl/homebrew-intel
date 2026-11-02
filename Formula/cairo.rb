@@ -10,16 +10,16 @@ class Cairo < Formula
   license any_of: ["LGPL-2.1-only", "MPL-1.1"]
 
   depends_on arch: :x86_64
-  depends_on :macos
   depends_on "fontconfig"
   depends_on "freetype"
-  depends_on "maxvandl/intel/glib"
   depends_on "libpng"
   depends_on "libx11"
   depends_on "libxcb"
   depends_on "libxext"
   depends_on "libxrender"
   depends_on "lzo"
+  depends_on :macos
+  depends_on "maxvandl/intel/glib"
   depends_on "pixman"
 
   def install

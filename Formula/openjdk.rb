@@ -5,9 +5,9 @@
 class Openjdk < Formula
   desc "Development kit for the Java programming language (Zulu OpenJDK x86_64 build)"
   homepage "https://openjdk.org/"
-  url "https://cdn.azul.com/zulu/bin/zulu27.28.101-ca-jdk27.0.0-macosx_x64.tar.gz"
-  version "27"
-  sha256 "b5d64393a228ad8680e5936cb114243118d3f6d87b668f0280ef8c15d674439c"
+  url "https://cdn.azul.com/zulu/bin/zulu27.30.109-ca-jdk27.0.1.0.3-macosx_x64.tar.gz"
+  version "27.0.1"
+  sha256 "88cf4b1d04ed677d88e53716fb0c960b89917a0234cea6555ba9aa5d37961b83"
   license "GPL-2.0-only" => { with: "Classpath-exception-2.0" }
 
   livecheck do
