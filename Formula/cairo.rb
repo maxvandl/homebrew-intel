@@ -4,9 +4,9 @@
 class Cairo < Formula
   desc "Vector graphics library with cross-device output support (prebuilt x86_64 keg)"
   homepage "https://cairographics.org/"
-  url "https://github.com/maxvandl/homebrew-intel/releases/download/cairo-1.18.4/cairo-1.18.4-x86_64-macos.tar.gz"
-  version "1.18.4"
-  sha256 "ff8f875ab0d5cedd5c3e8b82b4df26b0a9fa78513d01dad16d04803375c24e36"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/cairo-1.18.6/cairo-1.18.6-x86_64-macos.tar.gz"
+  version "1.18.6"
+  sha256 "81d370282b1426d3ae8b3d021adddd2e913e918bf10dd0bc1c58341b0af1b3a9"
   license any_of: ["LGPL-2.1-only", "MPL-1.1"]
 
   depends_on arch: :x86_64
