@@ -18,6 +18,6 @@ class Openjph < Formula
 
   test do
     assert_path_exists lib/"libopenjph.dylib"
-    assert_match "ojph_compress", shell_output("#{bin}/ojph_compress 2>&1", 255)
+    assert_match "arguments are necessary", shell_output("#{bin}/ojph_compress 2>&1", 255)
   end
 end
