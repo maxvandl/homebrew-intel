@@ -94,6 +94,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `trunk` | 0.22.1 | Build, bundle & ship your Rust WASM application to the web. |
 | `beads` | 1.3.2 | Memory upgrade for your coding agent. |
 | `gascity` | 1.5.1 | Orchestration-builder SDK for multi-agent coding workflows. |
+| `httpd` | 2.4.69 | Apache HTTP server. |
 
 ## Casks
 
