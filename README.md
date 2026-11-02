@@ -82,6 +82,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `aws-iam-authenticator` | 0.7.24 | Use AWS IAM credentials to authenticate to Kubernetes. |
 | `dolt` | 2.6.2 | Git for Data. |
 | `act` | 0.2.94 | Run your GitHub Actions locally. |
+| `vacuum` | 0.36.2 | World's fastest OpenAPI & Swagger linter. |
 
 ## Casks
 
