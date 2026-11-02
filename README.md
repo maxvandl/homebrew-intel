@@ -61,6 +61,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libsodium` | 1.0.22 | NaCl networking and cryptography library. |
 | `json-c` | 0.19 | JSON parser for C. |
 | `libssh2` | 1.11.1 | C library implementing the SSH2 protocol. |
+| `gmp` | 6.3.0 | GNU multiple precision arithmetic library. |
 
 ## Casks
 
