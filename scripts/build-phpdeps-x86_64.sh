@@ -6,7 +6,8 @@ R=/Users/lin/llvm; S=$R/homebrew-intel/scripts
 A=$S/build-autotools-x86_64.sh; C=$S/build-cmakeproj-x86_64.sh; M=$S/build-meson-x86_64.sh
 CLT=/Library/Developer/CommandLineTools
 get() { mkdir -p "$R/$1/src"; cd "$R/$1"; [ -f "$(basename "$2")" ] || curl -sfLO "$2"; rm -rf src; mkdir src; tar xf "$(basename "$2")" -C src --strip-components 1; cd "$R"; }
-optlink() { [ -e "/usr/local/opt/$1" ] || { ln -s "$(ls -d "$R/$1"/stage/usr/local/Cellar/"$1"/* | tail -1)" "/usr/local/opt/$1" && echo "/usr/local/opt/$1" >> "$R/deps/session-optlinks.txt"; }; }
+optlink() { local k; k=$(ls -d "$R/$1"/stage/usr/local/Cellar/"$1"/* 2>/dev/null | tail -1); [ -n "$k" ] || return 0
+  [ -e "/usr/local/opt/$1" ] || { ln -s "$k" "/usr/local/opt/$1" && echo "/usr/local/opt/$1" >> "$R/deps/session-optlinks.txt"; }; }
 K() { echo "$R/$1/stage/usr/local/Cellar/$1/$2"; }
 for x in "$@"; do L=$R/$x/build.log; case $x in
 m4) get m4 https://ftpmirror.gnu.org/m4/m4-1.4.21.tar.xz
@@ -92,7 +93,7 @@ apr-util) get apr-util "https://archive.apache.org/dist/apr/apr-util-1.6.5.tar.b
   k=$(K apr-util 1.6.5); mkdir -p $k/libexec/lib; for f in $k/lib/*.dylib; do ln -sf ../../lib/$(basename $f) $k/libexec/lib/; done
   find $k/lib \( -name '*.la' -o -name '*.exp' \) -delete; sed -i '' "s|/usr/local/Cellar/apr-util/1.6.5|/usr/local/opt/apr-util|g" $k/bin/apu-1-config; echo "apr-util $r"; optlink apr-util ;;
 net-snmp) get net-snmp https://downloads.sourceforge.net/project/net-snmp/net-snmp/5.9.5.2/net-snmp-5.9.5.2.tar.gz
-  DEPS="openssl@4" $A net-snmp 5.9.5.2 $R/net-snmp/src --disable-debugging --enable-ipv6 --with-defaults \
+  CFLAGS="-g -O2 -Wno-error=declaration-after-statement" DEPS="openssl@4" $A net-snmp 5.9.5.2 $R/net-snmp/src --disable-debugging --enable-ipv6 --with-defaults \
     --with-persistent-directory=/usr/local/var/db/net-snmp --with-logfile=/usr/local/var/log/snmpd.log \
     "--with-mib-modules=host ucd-snmp/diskio" --without-rpm --without-kmem-usage --disable-embedded-perl --without-perl-modules \
     --with-openssl=/usr/local/opt/openssl@4 > $L 2>&1; echo "net-snmp $?"; optlink net-snmp ;;
