@@ -1,6 +1,6 @@
 #!/bin/bash
 # Нативная кросс-сборка python@3.X под x86_64 macOS на Apple Silicon.
-# usage: build-python-x86_64.sh 3.14.10
+# usage: build-python-x86_64.sh 3.14.10   (проверено на 3.12-3.15)
 # Повторяет install формулы homebrew-core python@3.X (framework-сборка, патчи, ensurepip,
 # pip/wheel из sdist, sitecustomize.py, EXTERNALLY-MANAGED). Патчи и ресурсы (pip, wheel,
 # flit-core) берутся из `brew cat python@3.X` arm64-brew, так что они всегда как в core.
@@ -29,6 +29,11 @@ SP=$KEG/lib/python$MM/site-packages                   # root_site_packages
 STAGE=$ROOT/stage-$MM
 CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT
 OPENSSL4=/Users/lin/llvm/openssl/stage4/usr/local/Cellar/openssl@4/4.1.0
+# различия между версиями берём из формулы core: openssl@3/@4, zstd, tail-call, certifi, sysconfig-патч
+SSL=$(grep -oE 'depends_on "openssl@[0-9]+"' "$FORMULA" | grep -oE 'openssl@[0-9]+')
+DEPS="mpdecimal $SSL sqlite xz"; grep -q 'depends_on "zstd"' "$FORMULA" && DEPS="$DEPS zstd"
+EXTRA=""; grep -q -- '--with-tail-call-interp' "$FORMULA" && EXTRA="--with-tail-call-interp"
+SYSCFG=$(grep -oE 'Patches/python/[^"]+' "$FORMULA")
 # python3 (не altinstall) — тот, на который в core указывает алиас python3
 ALT=1; [ "$PY3" = "python@$MM" ] && ALT=0
 
@@ -38,7 +43,6 @@ export CC="$CLT/usr/bin/clang -arch x86_64" CXX="$CLT/usr/bin/clang++ -arch x86_
 export MACOSX_DEPLOYMENT_TARGET=26.0
 export LLVM_AR=$CLT/usr/bin/ar LLVM_PROFDATA=$CLT/usr/bin/llvm-profdata   # для --with-lto и PGO
 export PKG_CONFIG=/opt/homebrew/bin/pkgconf
-DEPS="mpdecimal openssl@4 sqlite xz zstd"
 PCDIRS=""; INC=""; LIBS=""
 for d in $DEPS; do PCDIRS="$PCDIRS:/usr/local/opt/$d/lib/pkgconfig"; INC="$INC -I/usr/local/opt/$d/include"; LIBS="$LIBS -L/usr/local/opt/$d/lib"; done
 export PKG_CONFIG_LIBDIR="${PCDIRS#:}:/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/26"
@@ -47,7 +51,7 @@ unset PYTHONHOME PYTHONPATH
 [ -e "$KEG" ] && { echo "ERROR: $KEG уже существует"; exit 1; }
 # openssl@4 из этого tap ещё может быть не установлен: на время сборки подставляем staged keg
 TMPLINK=""
-if [ ! -e /usr/local/opt/openssl@4 ]; then ln -s "$OPENSSL4" /usr/local/opt/openssl@4; TMPLINK=/usr/local/opt/openssl@4; fi
+if [ "$SSL" = openssl@4 ] && [ ! -e /usr/local/opt/openssl@4 ]; then ln -s "$OPENSSL4" /usr/local/opt/openssl@4; TMPLINK=/usr/local/opt/openssl@4; fi
 trap '[ -n "$TMPLINK" ] && rm -f "$TMPLINK"' EXIT
 
 cd "$ROOT"
@@ -59,19 +63,19 @@ echo "### патчи"
 for u in $(grep -oE 'https://github.com/python/cpython/commit/[0-9a-f]+\.patch\?full_index=1' "$FORMULA"); do
   curl -fsL "$u" | patch -p1
 done
-curl -fsL https://raw.githubusercontent.com/Homebrew/homebrew-core/main/Patches/python/3.13-sysconfig.diff |
+curl -fsL "https://raw.githubusercontent.com/Homebrew/homebrew-core/main/$SYSCFG" |
   sed 's|@@HOMEBREW_PREFIX@@|/usr/local|g' | patch -p1
 
 sed -i '' 's/libmpdec_machine=universal/libmpdec_machine=x64/' configure
 export PYTHON_DECIMAL_WITH_MACHINE=x64
-sed -i '' -e "s|DEFAULT_LIBRARY_FALLBACK = \[|DEFAULT_LIBRARY_FALLBACK = [ '/usr/local/lib', '/usr/local/opt/openssl@4/lib',|" \
+sed -i '' -e "s|DEFAULT_LIBRARY_FALLBACK = \[|DEFAULT_LIBRARY_FALLBACK = [ '/usr/local/lib', '/usr/local/opt/$SSL/lib',|" \
           -e "s|DEFAULT_FRAMEWORK_FALLBACK = \[|DEFAULT_FRAMEWORK_FALLBACK = [ '/usr/local/Frameworks',|" Lib/ctypes/macholib/dyld.py
 
 echo "### configure"
 ./configure --prefix="$KEG" --enable-ipv6 --datarootdir="$KEG/share" --datadir="$KEG/share" \
-  --without-ensurepip --enable-loadable-sqlite-extensions --with-openssl=/usr/local/opt/openssl@4 \
+  --without-ensurepip --enable-loadable-sqlite-extensions --with-openssl=/usr/local/opt/$SSL \
   --with-system-expat --with-system-libmpdec --with-readline=editline \
-  --enable-optimizations --with-lto --enable-framework="$FW" --with-dtrace --with-dbmliborder=ndbm --with-tail-call-interp \
+  --enable-optimizations --with-lto --enable-framework="$FW" --with-dtrace --with-dbmliborder=ndbm $EXTRA \
   MACOSX_DEPLOYMENT_TARGET=26.0 \
   "CFLAGS_NODIST=${INC# }" \
   "LDFLAGS_NODIST=${LIBS# } -L/usr/local/lib -Wl,-rpath,/usr/local/lib" \
@@ -93,7 +97,7 @@ for f in "$LIBC/_sysconfigdata__darwin_darwin.py" "$LIBC/_sysconfig_vars__darwin
   [ -f "$f" ] && sed -i '' "s|$KEG|$OPT|g" "$f"
 done
 sed -i '' -E 's/^LINKFORSHARED=(.*)PYTHONFRAMEWORKDIR(.*)/LINKFORSHARED=\1PYTHONFRAMEWORKINSTALLDIR\2/' "$LIBC/config-$MM-darwin/Makefile"
-perl -0pi -e "s{('LINKFORSHARED': .*?) (Python.framework/Versions/3.\\d+/Python)'}{\$1 $OPT/Frameworks/\$2'}s" "$LIBC/_sysconfigdata__darwin_darwin.py"
+perl -0pi -e "s{('LINKFORSHARED': .*?)( |')(Python.framework/Versions/3.\\d+/Python)'}{\$1\$2$OPT/Frameworks/\$3'}s" "$LIBC/_sysconfigdata__darwin_darwin.py"
 [ $ALT = 1 ] && rm -rf "$FW/Python.framework/Headers" "$FW/Python.framework/Python" \
                       "$FW/Python.framework/Resources" "$FW/Python.framework/Versions/Current"
 rm -rf "${LIBC:?}/site-packages/"*
@@ -127,8 +131,10 @@ WHEELS="$LIBC/ensurepip/_bundled/pip-$PIPVER-py3-none-any.whl"
 [ $HAS_WHEEL = 1 ] && WHEELS="$WHEELS $(ls "$KEG"/libexec/wheel-*-py3-none-any.whl)"
 "$PY" -Im pip install -v --no-deps --no-index --upgrade --isolated --target="$SP" $WHEELS
 
-CERTIFI=$SP/pip/_vendor/certifi
-rm "$CERTIFI/cacert.pem"; ln -s /usr/local/etc/ca-certificates/cert.pem "$CERTIFI/cacert.pem"
+if grep -q 'certifi = root_site_packages' "$FORMULA"; then
+  CERTIFI=$SP/pip/_vendor/certifi
+  rm "$CERTIFI/cacert.pem"; ln -s /usr/local/etc/ca-certificates/cert.pem "$CERTIFI/cacert.pem"
+fi
 mv "$SP"/bin/* bin/; rmdir "$SP/bin"
 rm bin/pip; [ $ALT = 1 ] && rm bin/pip3
 if [ $HAS_WHEEL = 1 ]; then
@@ -196,7 +202,7 @@ PYTHON
 sed -n '/EXTERNALLY-MANAGED").write <<~INI/,/^    INI$/p' "$FORMULA" | sed -e '1d' -e '$d' -e 's/^      //' > "$LIBC/EXTERNALLY-MANAGED"
 
 echo "### проверка"
-"$PY" -c 'import sqlite3, _ctypes, _decimal, pyexpat, readline, zlib, ssl, lzma, _zstd; print(ssl.OPENSSL_VERSION)'
+"$PY" -c 'import sqlite3, _ctypes, _decimal, pyexpat, readline, zlib, ssl, lzma; print(ssl.OPENSSL_VERSION)'
 
 cd /; mkdir -p "$STAGE/usr/local/Cellar/python@$MM"
 mv "$KEG" "$STAGE/usr/local/Cellar/python@$MM/"
