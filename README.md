@@ -67,6 +67,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libtool` | 2.6.2 | Generic library support script. |
 | `libnghttp2` | 1.70.0 | HTTP/2 C Library. |
 | `libnghttp3` | 1.18.0 | HTTP/3 library written in C. |
+| `libngtcp2` | 1.25.0 | IETF QUIC protocol implementation. |
 
 ## Casks
 
