@@ -74,6 +74,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libavif` | 1.4.2 | Library for encoding and decoding .avif files. |
 | `gd` | 2.3.3 | Graphics library to dynamically manipulate images. |
 | `libpq` | 18.6 | Postgres C API library. |
+| `libpsl` | 0.23.3 | C library for the Public Suffix List. |
 
 ## Casks
 
