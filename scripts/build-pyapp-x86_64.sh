@@ -46,9 +46,11 @@ print(" ".join(sorted(set(" ".join(m[x] for x in d if x in m).split()))))')
   "$KEG/libexec/bin/python" -m pip check || true
   mkdir -p "$KEG/bin"
   dist=${main%%==*}
-  for s in $("$KEG/libexec/bin/python" -c "import importlib.metadata as m,sys;print(' '.join(e.name for e in m.distribution(sys.argv[1]).entry_points if e.group=='console_scripts'))" "$dist"); do
-    ln -s "../libexec/bin/$s" "$KEG/bin/$s"
-  done
+  # ansible: как pip_install_and_link ansible-core в core — линкуются и его console scripts
+  [ "$n" = ansible ] && dist="$dist ansible-core"
+  for d in $dist; do for s in $("$KEG/libexec/bin/python" -c "import importlib.metadata as m,sys;print(' '.join(e.name for e in m.distribution(sys.argv[1]).entry_points if e.group=='console_scripts'))" "$d"); do
+    ln -sf "../libexec/bin/$s" "$KEG/bin/$s"
+  done; done
   ls "$KEG/bin"
   mkdir -p "$STAGE/usr/local/Cellar/$n"; mv "$KEG" "$STAGE/usr/local/Cellar/$n/"; rmdir "/usr/local/Cellar/$n" 2>/dev/null || true
   "$R/homebrew-intel/scripts/fix-opt-paths.sh" "$STAGE$KEG"

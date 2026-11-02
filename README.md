@@ -105,6 +105,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `mac-cleanup-py` | 3.4.0 | Python cleanup script for macOS. |
 | `cve-bin-tool` | 3.4 | Scans binaries and SBOMs for known vulnerabilities and prepares reports. |
 | `gemini-cli` | 0.66.0 | Interact with Google Gemini AI models from the command-line. |
+| `ansible` | 14.5.0 | Automate deployment, configuration, and upgrading. |
 
 ## Casks
 
