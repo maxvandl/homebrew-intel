@@ -84,6 +84,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `act` | 0.2.94 | Run your GitHub Actions locally. |
 | `vacuum` | 0.36.2 | World's fastest OpenAPI & Swagger linter. |
 | `mole` | 1.67.0 | Deep clean and optimize your Mac. |
+| `curl` | 8.23.0 | Get a file from an HTTP, HTTPS or FTP server. |
 
 ## Casks
 

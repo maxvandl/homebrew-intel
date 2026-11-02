@@ -93,7 +93,7 @@ apr-util) get apr-util "https://archive.apache.org/dist/apr/apr-util-1.6.5.tar.b
   k=$(K apr-util 1.6.5); mkdir -p $k/libexec/lib; for f in $k/lib/*.dylib; do ln -sf ../../lib/$(basename $f) $k/libexec/lib/; done
   find $k/lib \( -name '*.la' -o -name '*.exp' \) -delete; sed -i '' "s|/usr/local/Cellar/apr-util/1.6.5|/usr/local/opt/apr-util|g" $k/bin/apu-1-config; echo "apr-util $r"; optlink apr-util ;;
 net-snmp) get net-snmp https://downloads.sourceforge.net/project/net-snmp/net-snmp/5.9.5.2/net-snmp-5.9.5.2.tar.gz
-  CFLAGS="-g -O2 -Wno-error=declaration-after-statement" DEPS="openssl@4" $A net-snmp 5.9.5.2 $R/net-snmp/src --disable-debugging --enable-ipv6 --with-defaults \
+  LIBS="-framework DiskArbitration -framework IOKit -framework CoreFoundation" CFLAGS="-g -O2 -Wno-error=declaration-after-statement" DEPS="openssl@4" $A net-snmp 5.9.5.2 $R/net-snmp/src --disable-debugging --enable-ipv6 --with-defaults \
     --with-persistent-directory=/usr/local/var/db/net-snmp --with-logfile=/usr/local/var/log/snmpd.log \
     "--with-mib-modules=host ucd-snmp/diskio" --without-rpm --without-kmem-usage --disable-embedded-perl --without-perl-modules \
     --with-openssl=/usr/local/opt/openssl@4 > $L 2>&1; echo "net-snmp $?"; optlink net-snmp ;;
@@ -117,8 +117,10 @@ ncurses) get ncurses https://invisible-mirror.net/archives/ncurses/ncurses-6.6.t
   ( cd $k/include && ln -sf ncursesw ncurses && for h in curses form ncurses panel term termcap; do ln -sf ncursesw/$h.h $h.h; done )
   mkdir -p $k/share/ncurses && cp -R $R/ncurses/src/test $k/share/ncurses/ && cp $R/ncurses/src/{install-sh,config.sub,config.guess} $k/share/ncurses/test/
   echo "ncurses $r"; optlink ncurses ;;
+jemalloc) get jemalloc https://github.com/jemalloc/jemalloc/releases/download/5.4.0/jemalloc-5.4.0.tar.bz2
+  $A jemalloc 5.4.0 $R/jemalloc/src --disable-debug --with-jemalloc-prefix= > $L 2>&1; echo "jemalloc $?"; optlink jemalloc ;;
 tmux) get tmux https://github.com/tmux/tmux/releases/download/3.8/tmux-3.8.tar.gz
-  DEPS="libevent ncurses utf8proc" $A tmux 3.8 $R/tmux/src --enable-sixel --sysconfdir=/usr/local/etc --enable-utf8proc > $L 2>&1; r=$?
+  DEPS="libevent ncurses utf8proc jemalloc" $A tmux 3.8 $R/tmux/src --enable-jemalloc --enable-sixel --sysconfdir=/usr/local/etc --enable-utf8proc > $L 2>&1; r=$?
   mkdir -p $(K tmux 3.8)/share/tmux && cp $R/tmux/src/example_tmux.conf $(K tmux 3.8)/share/tmux/; echo "tmux $r" ;;
 *) echo "unknown $x" ;;
 esac; done
