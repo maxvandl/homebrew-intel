@@ -14,6 +14,8 @@ INTEL_BREW = ["arch", "-x86_64", "/usr/local/bin/brew"]
 ap = argparse.ArgumentParser()
 ap.add_argument("name"); ap.add_argument("version"); ap.add_argument("keg"); ap.add_argument("script")
 ap.add_argument("--test", default=None)
+ap.add_argument("--install", default=None, help="тело def install (по умолчанию prefix.install)")
+ap.add_argument("--extra", default=None, help="строки DSL после depends_on (link_overwrite, post_install_steps...)")
 ap.add_argument("--notes", default="")
 ap.add_argument("--no-push", action="store_true")
 a = ap.parse_args()
@@ -73,7 +75,11 @@ if info.get("keg_only"):
 lines.append("  depends_on arch: :x86_64")
 lines += [f'  depends_on "{d}"' for d in deps]
 lines.append("  depends_on :macos")
-lines += ["", "  def install", '    prefix.install Dir["*"]', "  end", ""]
+lines.append("")
+if a.extra:
+    lines += [f"  {l}" if l else "" for l in a.extra.splitlines()] + [""]
+body = a.install or 'prefix.install Dir["*"]'
+lines += ["  def install"] + [f"    {l}" if l else "" for l in body.splitlines()] + ["  end", ""]
 test = a.test or f'assert_path_exists prefix/"lib"'
 lines += ["  test do"] + [f"    {l}" if l else "" for l in test.splitlines()] + ["  end", "end", ""]
 fpath = f"{TAP}/Formula/{a.name}.rb"

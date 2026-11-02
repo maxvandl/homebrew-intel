@@ -24,6 +24,16 @@ for d in ${DEPS:-}; do
 done
 export PKG_CONFIG_LIBDIR="$ROOT/deps/pkgconfig${PCDIRS}:/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/26"
 
+# OPTLINKS="openssl@4 ..." — keg'и этого tap, ещё не установленные в Intel-brew: на время сборки
+# /usr/local/opt/<f> указывает на staged keg (<ROOT>/<dir>/stage*/usr/local/Cellar/<f>/<ver>)
+TMPLINKS=""
+for f in ${OPTLINKS:-}; do
+  [ -e "/usr/local/opt/$f" ] && continue
+  k=$(ls -d "$ROOT"/*/stage*/usr/local/Cellar/"$f"/* 2>/dev/null | tail -1)
+  [ -n "$k" ] || { echo "ERROR: нет staged keg для $f"; exit 1; }
+  ln -s "$k" "/usr/local/opt/$f"; TMPLINKS="$TMPLINKS /usr/local/opt/$f"
+done
+trap 'for l in $TMPLINKS; do rm -f "$l"; done' EXIT
 rm -rf "$STAGE" "$BLD"
 cmake -G Ninja -S "$SRC" -B "$BLD" \
   -DCMAKE_BUILD_TYPE=Release \

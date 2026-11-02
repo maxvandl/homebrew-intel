@@ -1,6 +1,6 @@
 #!/bin/bash
 # Универсальная нативная кросс-сборка autotools-проекта под x86_64 macOS на Apple Silicon.
-# usage: [DEPS="xz zstd ..."] [SUBDIR=source] build-autotools-x86_64.sh NAME VERSION SRCDIR [configure args...]
+# usage: [DEPS="xz zstd ..."] [SUBDIR=source] [OPTLINKS=...] [MAKEARGS=...] build-autotools-x86_64.sh NAME VERSION SRCDIR [configure args...]
 #   DEPS   — формулы Intel-brew (/usr/local/opt/*), чьи include/lib/pkgconfig подключить (аналог superenv)
 #   SUBDIR — подкаталог SRCDIR с configure (у icu4c это source)
 # configure запускается под Rosetta (arch -x86_64), поэтому build==host==x86_64 и тестовые
@@ -33,11 +33,21 @@ done
 export CPPFLAGS="${CPPF# }" LDFLAGS="${LDF# } -Wl,-headerpad_max_install_names"   # место для opt-путей (fix-opt-paths)
 export PKG_CONFIG_LIBDIR="$ROOT/deps/pkgconfig${PCDIRS}:/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/26"
 
+# OPTLINKS="openssl@4 ..." — keg'и этого tap, ещё не установленные в Intel-brew: на время сборки
+# /usr/local/opt/<f> указывает на staged keg (<ROOT>/<dir>/stage*/usr/local/Cellar/<f>/<ver>)
+TMPLINKS=""
+for f in ${OPTLINKS:-}; do
+  [ -e "/usr/local/opt/$f" ] && continue
+  k=$(ls -d "$ROOT"/*/stage*/usr/local/Cellar/"$f"/* 2>/dev/null | tail -1)
+  [ -n "$k" ] || { echo "ERROR: нет staged keg для $f"; exit 1; }
+  ln -s "$k" "/usr/local/opt/$f"; TMPLINKS="$TMPLINKS /usr/local/opt/$f"
+done
+trap 'for l in $TMPLINKS; do rm -f "$l"; done' EXIT
 rm -rf "$STAGE"
 cd "$SRC/${SUBDIR:-.}"
 make distclean >/dev/null 2>&1 || true
 ./configure --disable-debug --disable-dependency-tracking --prefix="$PREFIX" --libdir="$PREFIX/lib" "$@"
-make -j"$(sysctl -n hw.ncpu)"
-make install DESTDIR="$STAGE"
+make -j"$(sysctl -n hw.ncpu)" ${MAKEARGS:-}
+make install DESTDIR="$STAGE" ${MAKEARGS:-}
 /Users/lin/llvm/homebrew-intel/scripts/fix-opt-paths.sh "$STAGE$PREFIX"
 echo "Готово: $STAGE$PREFIX"
