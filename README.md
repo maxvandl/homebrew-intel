@@ -38,6 +38,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `simdjson` | 5.1.1 | SIMD-accelerated C++ JSON parser. |
 | `brotli` | 1.2.1 | Generic-purpose lossless compression algorithm by Google. |
 | `jpeg-turbo` | 3.2.1 | JPEG image codec that aids compression and decompression. |
+| `icu4c@78` | 78.3 | C/C++ and Java libraries for Unicode and globalization. |
 
 ## Casks
 
