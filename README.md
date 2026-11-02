@@ -72,6 +72,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libzip` | 1.12.1 | C library for reading, creating, and modifying zip archives. |
 | `dav1d` | 1.5.4 | AV1 decoder targeted to be small and fast. |
 | `libavif` | 1.4.2 | Library for encoding and decoding .avif files. |
+| `gd` | 2.3.3 | Graphics library to dynamically manipulate images. |
 
 ## Casks
 
