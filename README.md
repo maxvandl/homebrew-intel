@@ -97,6 +97,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `httpd` | 2.4.69 | Apache HTTP server. |
 | `jemalloc` | 5.4.0 | Implementation of malloc emphasizing fragmentation avoidance. |
 | `tmux` | 3.8 | Terminal multiplexer. |
+| `kubernetes-cli` | 1.37.2 | Kubernetes command-line interface. |
 
 ## Casks
 
