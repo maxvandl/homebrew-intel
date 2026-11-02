@@ -58,6 +58,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `m4` | 1.4.21 | Macro processing language. |
 | `pkgconf` | 3.0.10 | Package compiler and linker metadata toolkit. |
 | `argon2` | 20190702 | Password hashing library and CLI utility. |
+| `libsodium` | 1.0.22 | NaCl networking and cryptography library. |
 
 ## Casks
 
