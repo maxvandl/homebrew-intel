@@ -91,6 +91,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `ncurses` | 6.6 | Text-based UI library. |
 | `jq` | 1.8.2 | Lightweight and flexible command-line JSON processor. |
 | `maturin` | 1.16.0 | Build and publish Rust crates as Python packages. |
+| `trunk` | 0.22.1 | Build, bundle & ship your Rust WASM application to the web. |
 
 ## Casks
 
