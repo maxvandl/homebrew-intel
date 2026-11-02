@@ -87,6 +87,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `curl` | 8.23.0 | Get a file from an HTTP, HTTPS or FTP server. |
 | `flock` | 0.4.0 | Lock file during command. |
 | `libevent` | 2.1.13 | Asynchronous event library. |
+| `utf8proc` | 2.12.0 | Clean C library for processing UTF-8 Unicode data. |
 
 ## Casks
 
