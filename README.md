@@ -57,6 +57,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `freetds` | 1.5.20 | Libraries to talk to Microsoft SQL Server and Sybase databases. |
 | `m4` | 1.4.21 | Macro processing language. |
 | `pkgconf` | 3.0.10 | Package compiler and linker metadata toolkit. |
+| `argon2` | 20190702 | Password hashing library and CLI utility. |
 
 ## Casks
 
