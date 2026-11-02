@@ -100,6 +100,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `kubernetes-cli` | 1.37.2 | Kubernetes command-line interface. |
 | `net-snmp` | 5.9.5.2 | Implements SNMP v1, v2c, and v3, using IPv4 and IPv6. |
 | `libssh` | 0.12.2 | C library SSHv1/SSHv2 client and server protocols. |
+| `tree` | 2.3.2 | Display directories as trees (with optional color/HTML output). |
 
 ## Casks
 
