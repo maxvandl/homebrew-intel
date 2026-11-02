@@ -37,6 +37,10 @@ find "$KEG" -type f \( -perm -u+x -o -name '*.dylib' -o -name '*.so' -o -name '*
     [[ $rp =~ $re ]] || continue
     $INT -rpath "$rp" "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f" 2>/dev/null || true
   done
+  # дубликаты rpath (Cellar-путь стал равен уже имевшемуся opt-пути) dyld не принимает: удаляем лишние
+  for rp in $(otool -l "$f" | awk '/cmd LC_RPATH/{getline; getline; print $2}' | sort | uniq -d); do
+    $INT -delete_rpath "$rp" "$f"
+  done
   codesign -f -s - "$f" 2>/dev/null || true
 done
 echo "fix-opt-paths: $KEG"

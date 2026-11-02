@@ -20,6 +20,8 @@ export SDKROOT=$SDK MACOSX_DEPLOYMENT_TARGET=26.0
 export PATH=$ROOT/deps/armbin:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export CC="$CLT/usr/bin/clang -arch x86_64" CXX="$CLT/usr/bin/clang++ -arch x86_64"
 export PKG_CONFIG=/opt/homebrew/bin/pkgconf
+# dtrace (--enable-dtrace) зовёт cpp через xcrun, а libxcrun в CLT 27 только arm64: запускаем его как arm64
+mkdir -p "$ROOT/deps/armbin"; printf '#!/bin/sh\nexec arch -arm64 /usr/sbin/dtrace "$@"\n' > "$ROOT/deps/armbin/dtrace"; chmod +x "$ROOT/deps/armbin/dtrace"
 DEPS="apr apr-util argon2 curl freetds gd gmp icu4c@79 libpq libsodium libzip net-snmp oniguruma openldap openssl@4 pcre2 sqlite tidy-html5 unixodbc gettext"
 
 TMPLINKS=""
@@ -34,8 +36,11 @@ trap 'for l in $TMPLINKS; do rm -f "$l"; done' EXIT
 CPPF=""; LDF=""; PC=""
 for d in $DEPS; do
   CPPF="$CPPF -I/usr/local/opt/$d/include"; LDF="$LDF -L/usr/local/opt/$d/lib"
-  for p in lib/pkgconfig share/pkgconfig; do [ -d "/usr/local/opt/$d/$p" ] && PC="$PC:/usr/local/opt/$d/$p"; done
 done
+for d in $DEPS; do for p in lib/pkgconfig share/pkgconfig; do [ -d "/usr/local/opt/$d/$p" ] && PC="$PC:/usr/local/opt/$d/$p"; done; done
+# затем все opt-формулы (прямые зависимости выше по приоритету, иначе icu4c@76 перебьёт icu4c@79):
+# .pc зависимостей тянут транзитивные (libcurl -> brotli, nghttp2, libssh2, ...)
+for p in /usr/local/opt/*/lib/pkgconfig /usr/local/opt/*/share/pkgconfig; do [ -d "$p" ] && PC="$PC:$p"; done
 export CPPFLAGS="${CPPF# }" LDFLAGS="${LDF# } -Wl,-headerpad_max_install_names"
 export PKG_CONFIG_LIBDIR="${PC#:}:/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/26"
 export SASL_CFLAGS="-I$SDK/usr/include/sasl" SASL_LIBS="-lsasl2" PHP_BUILD_PROVIDER=maxvandl
@@ -69,7 +74,7 @@ make -j"$(sysctl -n hw.ncpu)"
 make install INSTALL_ROOT="$STAGE"
 
 K=$STAGE$P
-EXT=$(basename "$(sed -n "s/^extension_dir='\(.*\)'/\1/p" "$K/bin/php-config")")
+EXT=$(basename "$(sed -n -E "s/^extension_dir=[\"']([^\"']*)[\"']/\1/p" "$K/bin/php-config")")
 sed -i '' "s|$P/lib/php|$P/pecl|g" "$K/bin/php-config"
 for f in php.ini-development php.ini-production; do
   sed -i '' -E -e "s|; ?extension_dir = \"\./\"|extension_dir = \"/usr/local/lib/php/pecl/$EXT\"|" \
