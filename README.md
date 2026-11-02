@@ -29,6 +29,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `openssl@3` | 3.6.5 | no-ssl3, no-zlib, same configure flags as homebrew-core. Shadows core `openssl@3`; certs via `ca-certificates`. |
 | `openssl@4` | 4.1.0 | darwin64-x86_64-cc with enable-ec_nistp_64_gcc_128, same configure flags as homebrew-core. Shadows core `openssl@4` (which homebrew-core python now links). Certs via `ca-certificates`. |
 | `cmake` | 4.4.5 | Bootstrap build with system zlib/bzip2/curl, same flags as homebrew-core. Shadows core `cmake`. |
+| `python@3.15` | 3.15.2 | Framework build with PGO + ThinLTO, links `openssl@4` from this tap. Same patches and install steps as homebrew-core (pip from sdist, `sitecustomize.py`, EXTERNALLY-MANAGED). Provides `python3`. |
 | `openjdk` | 27.0.1  | Azul Zulu OpenJDK 27.0.1 macOS x64 build, laid out like homebrew-core `openjdk` (`libexec/openjdk.jdk`). No build needed. |
 | `node`    | 26.13.0 | Official darwin-x64 binary from nodejs.org, repackaged as a keg (npm included). No build needed. |
 
