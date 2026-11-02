@@ -25,7 +25,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `llvm@22` | 22.1.8  | clang, clang-tools-extra, mlir, polly, compiler-rt, libc++, libunwind. Keg-only, like upstream. Writes clang config files with `-isysroot` and `-B` to the CLT linker so it works under Rosetta. |
 | `glib`    | 2.90.1  | With built-in GIRepository/typelibs (introspection enabled), links Intel-brew `gettext` and `pcre2`. Built against the macOS 26 SDK (CLT 27 ships SDK 27, whose weak `pipe2` breaks glib on macOS 26). |
 | `cairo`   | 1.18.6  | Quartz, X11/XCB, PNG, PDF/PS/SVG, glib bindings. |
-| `harfbuzz`| 14.4.0  | With cairo, freetype, glib/gobject, graphite2, ICU (Intel-brew `icu4c@76`), CoreText and introspection. |
+| `harfbuzz`| 15.0.0  | With cairo, freetype, glib/gobject, graphite2, ICU (Intel-brew `icu4c@76`), CoreText and introspection. |
 | `openssl@3` | 3.6.5 | no-ssl3, no-zlib, same configure flags as homebrew-core. Shadows core `openssl@3`; certs via `ca-certificates`. |
 | `openssl@4` | 4.1.0 | darwin64-x86_64-cc with enable-ec_nistp_64_gcc_128, same configure flags as homebrew-core. Shadows core `openssl@4` (which homebrew-core python now links). Certs via `ca-certificates`. |
 | `cmake` | 4.4.4 | Bootstrap build with system zlib/bzip2/curl, same flags as homebrew-core. Shadows core `cmake`. |
