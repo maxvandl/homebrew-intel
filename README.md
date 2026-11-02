@@ -35,6 +35,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `openjdk` | 27.0.1  | Azul Zulu OpenJDK 27.0.1 macOS x64 build, laid out like homebrew-core `openjdk` (`libexec/openjdk.jdk`). No build needed. |
 | `node`    | 26.13.0 | Official darwin-x64 binary from nodejs.org, repackaged as a keg (npm included). No build needed. |
 | `c-ares` | 1.34.9 | Asynchronous DNS library. |
+| `simdjson` | 5.1.1 | SIMD-accelerated C++ JSON parser. |
 
 ## Casks
 
