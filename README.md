@@ -92,6 +92,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `jq` | 1.8.2 | Lightweight and flexible command-line JSON processor. |
 | `maturin` | 1.16.0 | Build and publish Rust crates as Python packages. |
 | `trunk` | 0.22.1 | Build, bundle & ship your Rust WASM application to the web. |
+| `beads` | 1.3.2 | Memory upgrade for your coding agent. |
 
 ## Casks
 
