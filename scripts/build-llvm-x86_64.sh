@@ -11,8 +11,9 @@ BUILD=$ROOT/build-x86_64
 PREFIX=/usr/local/Cellar/llvm@22/$VER   # как у Homebrew (std_cmake_args); реальная установка идёт в STAGE
 STAGE=$ROOT/stage
 NATIVE=/opt/homebrew/opt/llvm@22/bin   # arm64 llvm 22.1.8: отсюда берём tblgen'ы (та же версия!)
-CLT=$(xcode-select -p)                # runtimes собирает свежий x86_64 clang под Rosetta; /usr/bin/ld (xcrun-shim)
-                                      # там не работает, поэтому указываем настоящий ld через -B
+CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT  # не xcode-select -p: при установленном Xcode там нет ld и SDKs
+# runtimes собирает свежий x86_64 clang под Rosetta; /usr/bin/ld (xcrun-shim) там не работает,
+# поэтому указываем настоящий ld через -B
 
 command -v ninja >/dev/null || brew install ninja      # arm64 brew
 

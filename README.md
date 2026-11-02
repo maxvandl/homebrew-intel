@@ -23,7 +23,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 |-----------|---------|-------|
 | `llvm@23` | 23.1.3  | clang, clang-tools-extra, mlir, polly, compiler-rt, libc++, libunwind. Keg-only, like upstream. Writes clang config files with `-isysroot` and `-B` to the CLT linker so it works under Rosetta. |
 | `llvm@22` | 22.1.8  | clang, clang-tools-extra, mlir, polly, compiler-rt, libc++, libunwind. Keg-only, like upstream. Writes clang config files with `-isysroot` and `-B` to the CLT linker so it works under Rosetta. |
-| `glib`    | 2.90.0  | With built-in GIRepository/typelibs (introspection enabled), links Intel-brew `gettext` and `pcre2`. Built against the macOS 26 SDK (CLT 27 ships SDK 27, whose weak `pipe2` breaks glib on macOS 26). |
+| `glib`    | 2.90.1  | With built-in GIRepository/typelibs (introspection enabled), links Intel-brew `gettext` and `pcre2`. Built against the macOS 26 SDK (CLT 27 ships SDK 27, whose weak `pipe2` breaks glib on macOS 26). |
 | `cairo`   | 1.18.4  | Quartz, X11/XCB, PNG, PDF/PS/SVG, glib bindings. |
 | `harfbuzz`| 14.4.0  | With cairo, freetype, glib/gobject, graphite2, ICU (Intel-brew `icu4c@76`), CoreText and introspection. |
 | `openssl@3` | 3.6.5 | no-ssl3, no-zlib, same configure flags as homebrew-core. Shadows core `openssl@3`; certs via `ca-certificates`. |

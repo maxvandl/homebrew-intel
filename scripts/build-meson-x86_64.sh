@@ -10,7 +10,8 @@ NAME=$1; VER=$2; SRC=$3; shift 3
 ROOT=/Users/lin/llvm
 PREFIX=/usr/local/Cellar/$NAME/$VER
 STAGE=$ROOT/$NAME/stage
-CLT=$(xcode-select -p)
+CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT  # не xcode-select -p: при установленном Xcode там нет ld и SDKs
+
 
 export SDKROOT=$CLT/SDKs/MacOSX26.sdk     # не SDK 27 из CLT 27: слабые символы (pipe2 и т.п.) ломают рантайм на macOS 26
 export PATH=/opt/homebrew/opt/bison/bin:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -33,7 +34,7 @@ DYLD=""; XDG=""
 for d in "$ROOT"/*/stage/usr/local/Cellar/*/*; do [ -d "$d/lib" ] && DYLD="$DYLD:$d/lib"; [ -d "$d/share" ] && XDG="$XDG:$d/share"; done
 export DYLD_LIBRARY_PATH="${DYLD#:}" XDG_DATA_DIRS="${XDG#:}:/usr/local/share:/usr/share"
 export PATH=$ROOT/glib/staging/bin:$PATH
-export GI_TYPELIB_PATH=$ROOT/glib/stage/usr/local/Cellar/glib/2.90.0/lib/girepository-1.0
+export GI_TYPELIB_PATH=$(echo "$ROOT"/glib/stage/usr/local/Cellar/glib/*/lib/girepository-1.0)
 
 rm -rf "$STAGE" "$SRC/build"
 $MESON setup "$SRC/build" "$SRC" --prefix="$PREFIX" --buildtype=release --libdir=lib --wrap-mode=nofallback "$@"

@@ -1,13 +1,13 @@
-# Готовый x86_64 glib 2.90.0 с gobject-introspection 1.86.0, кросс-собранный
+# Готовый x86_64 glib 2.90.1 с gobject-introspection 1.86.0, кросс-собранный
 # нативно на Apple Silicon скриптом scripts/build-glib-x86_64.sh по трёхстадийной
 # схеме формулы homebrew-core (g-ir-scanner, как и у Homebrew, живёт в отдельной
 # формуле gobject-introspection; сюда входит встроенный gi-compile-repository).
 class Glib < Formula
   desc "Core application library for C (prebuilt x86_64 keg)"
   homepage "https://gitlab.gnome.org/GNOME/glib"
-  url "https://github.com/maxvandl/homebrew-intel/releases/download/glib-2.90.0/glib-2.90.0-x86_64-macos.tar.gz"
-  version "2.90.0"
-  sha256 "243de2953c90f1b433c430dc0dbf0caa088af1d06298461f51b084763e6f50cc"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/glib-2.90.1/glib-2.90.1-x86_64-macos.tar.gz"
+  version "2.90.1"
+  sha256 "126cc2e23a7912aa9fabd1013b19766dbf7998722c7dbd7158cd34f9d2472903"
   license "LGPL-2.1-or-later"
 
   depends_on arch: :x86_64

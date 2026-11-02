@@ -8,14 +8,15 @@
 # Компилятор — настоящий arm64 clang из CLT с "-arch x86_64"; CLT/usr/bin первым в PATH,
 # т.к. обёртки /usr/bin/{ld,ar,install_name_tool,...} под x86_64 не работают (CLT 27 без x86_64).
 set -euo pipefail
-VER=2.90.0; GI_VER=1.86.0
+VER=2.90.1; GI_VER=1.86.0
 ROOT=/Users/lin/llvm/glib
 SRC=$ROOT/glib-$VER
 GISRC=$ROOT/gobject-introspection-$GI_VER
 PREFIX=/usr/local/Cellar/glib/$VER
 STAGE=$ROOT/stage
 STAGING=$ROOT/staging
-CLT=$(xcode-select -p)
+CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT  # не xcode-select -p: при установленном Xcode там нет ld и SDKs
+
 PY=/usr/local/opt/python@3.13/bin/python3.13          # x86_64 python из Intel-brew (шебанг g-ir-scanner, _giscanner.so)
 
 export SDKROOT=$CLT/SDKs/MacOSX26.sdk   # НЕ MacOSX.sdk: в CLT 27 это SDK 27 с pipe2 и т.п., которых нет на macOS 26
