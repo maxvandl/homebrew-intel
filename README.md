@@ -78,6 +78,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `apr` | 1.7.6 | Apache Portable Runtime library. |
 | `apr-util` | 1.6.5 | Companion library to apr, the Apache Portable Runtime library. |
 | `doctl` | 2.1.0 | Command-line tool for DigitalOcean. |
+| `gogcli` | 0.47.1 | Google Suite CLI. |
 
 ## Casks
 
