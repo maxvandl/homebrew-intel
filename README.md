@@ -37,6 +37,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `c-ares` | 1.34.9 | Asynchronous DNS library. |
 | `simdjson` | 5.1.1 | SIMD-accelerated C++ JSON parser. |
 | `brotli` | 1.2.1 | Generic-purpose lossless compression algorithm by Google. |
+| `jpeg-turbo` | 3.2.1 | JPEG image codec that aids compression and decompression. |
 
 ## Casks
 
