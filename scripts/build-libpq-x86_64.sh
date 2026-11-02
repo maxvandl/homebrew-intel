@@ -16,6 +16,7 @@ export SDKROOT=$CLT/SDKs/MacOSX26.sdk MACOSX_DEPLOYMENT_TARGET=26.0
 export PATH=$ROOT/deps/armbin:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export CC="$CLT/usr/bin/clang -arch x86_64" CXX="$CLT/usr/bin/clang++ -arch x86_64"
 export PKG_CONFIG=/opt/homebrew/bin/pkgconf
+export XML_CATALOG_FILES=/opt/homebrew/etc/xml/catalog   # docbook/docbook-xsl из arm64-brew (для doc)
 DEPS="readline icu4c@79 krb5 openssl@4"
 CPPF=""; LDF=""; PC=""
 for d in $DEPS; do CPPF="$CPPF -I/usr/local/opt/$d/include"; LDF="$LDF -L/usr/local/opt/$d/lib"; PC="$PC:/usr/local/opt/$d/lib/pkgconfig"; done

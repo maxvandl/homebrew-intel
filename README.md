@@ -54,6 +54,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `boost` | 1.92.0 | Collection of portable C++ source libraries. |
 | `gobject-introspection` | 1.86.0 | Generate introspection data for GObject libraries. |
 | `aom` | 3.15.3 | Codec library for encoding and decoding AV1 video streams. |
+| `freetds` | 1.5.20 | Libraries to talk to Microsoft SQL Server and Sybase databases. |
 
 ## Casks
 
