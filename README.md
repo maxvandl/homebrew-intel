@@ -102,6 +102,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libssh` | 0.12.2 | C library SSHv1/SSHv2 client and server protocols. |
 | `tree` | 2.3.2 | Display directories as trees (with optional color/HTML output). |
 | `sphinx-doc` | 9.2.0 | Tool to create intelligent and beautiful documentation. |
+| `mac-cleanup-py` | 3.4.0 | Python cleanup script for macOS. |
 
 ## Casks
 
