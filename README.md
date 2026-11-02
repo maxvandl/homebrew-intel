@@ -48,6 +48,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libdeflate` | 1.26 | Heavily optimized DEFLATE/zlib/gzip compression and decompression. |
 | `openjph` | 0.32.0 | Open-source implementation of JPEG2000 Part-15 (or JPH or HTJ2K). |
 | `libvmaf` | 3.2.1 | Perceptual video quality assessment based on multi-method fusion. |
+| `unixodbc` | 2.3.14 | ODBC 3 connectivity for UNIX. |
 
 ## Casks
 
