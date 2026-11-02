@@ -103,6 +103,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `tree` | 2.3.2 | Display directories as trees (with optional color/HTML output). |
 | `sphinx-doc` | 9.2.0 | Tool to create intelligent and beautiful documentation. |
 | `mac-cleanup-py` | 3.4.0 | Python cleanup script for macOS. |
+| `cve-bin-tool` | 3.4 | Scans binaries and SBOMs for known vulnerabilities and prepares reports. |
 
 ## Casks
 
