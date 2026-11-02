@@ -46,6 +46,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `openldap` | 2.7.2 | Open source suite of directory software. |
 | `imath` | 3.2.3 | Library of 2D and 3D vector, matrix, and math operations. |
 | `libdeflate` | 1.26 | Heavily optimized DEFLATE/zlib/gzip compression and decompression. |
+| `openjph` | 0.32.0 | Open-source implementation of JPEG2000 Part-15 (or JPH or HTJ2K). |
 
 ## Casks
 
