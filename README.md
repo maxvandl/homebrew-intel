@@ -41,6 +41,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `icu4c@78` | 78.3 | C/C++ and Java libraries for Unicode and globalization. |
 | `fribidi` | 1.0.18 | Implementation of the Unicode BiDi algorithm. |
 | `z3` | 5.3.3 | High-performance theorem prover. |
+| `icu4c@79` | 79.1 | C/C++ and Java libraries for Unicode and globalization. |
 
 ## Casks
 

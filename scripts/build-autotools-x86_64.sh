@@ -21,6 +21,10 @@ ARMBIN=$ROOT/deps/armbin; mkdir -p "$ARMBIN"
 for t in help2man; do
   printf '#!/bin/sh\nexec arch -arm64 /opt/homebrew/bin/%s "$@"\n' "$t" > "$ARMBIN/$t"; chmod +x "$ARMBIN/$t"
 done
+# то же для xcrun-обёрток /usr/bin, которых нет в CLT/usr/bin (libxcrun в CLT 27 только arm64)
+for t in mig; do
+  printf '#!/bin/sh\nexec arch -arm64 /usr/bin/%s "$@"\n' "$t" > "$ARMBIN/$t"; chmod +x "$ARMBIN/$t"
+done
 export PATH=$ARMBIN:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export CC="$CLT/usr/bin/clang -arch x86_64" CXX="$CLT/usr/bin/clang++ -arch x86_64"
 export MACOSX_DEPLOYMENT_TARGET=26.0
