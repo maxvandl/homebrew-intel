@@ -43,6 +43,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `z3` | 5.3.3 | High-performance theorem prover. |
 | `icu4c@79` | 79.1 | C/C++ and Java libraries for Unicode and globalization. |
 | `simdutf` | 9.3.3 | Unicode conversion routines, fast. |
+| `openldap` | 2.7.2 | Open source suite of directory software. |
 
 ## Casks
 
