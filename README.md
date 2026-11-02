@@ -66,6 +66,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `autoconf` | 2.73 | Automatic configure script builder. |
 | `libtool` | 2.6.2 | Generic library support script. |
 | `libnghttp2` | 1.70.0 | HTTP/2 C Library. |
+| `libnghttp3` | 1.18.0 | HTTP/3 library written in C. |
 
 ## Casks
 
