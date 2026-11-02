@@ -34,6 +34,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `python@3.12` | 3.12.16 | Same build, linked against `openssl@3` like homebrew-core. Versioned only (`python3.12`, `pip3.12`, `wheel3.12`). |
 | `openjdk` | 27.0.1  | Azul Zulu OpenJDK 27.0.1 macOS x64 build, laid out like homebrew-core `openjdk` (`libexec/openjdk.jdk`). No build needed. |
 | `node`    | 26.13.0 | Official darwin-x64 binary from nodejs.org, repackaged as a keg (npm included). No build needed. |
+| `c-ares` | 1.34.9 | Asynchronous DNS library. |
 
 ## Casks
 

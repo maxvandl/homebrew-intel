@@ -11,16 +11,23 @@ CLT=/Library/Developer/CommandLineTools; export DEVELOPER_DIR=$CLT  # не xcode
 INT=$CLT/usr/bin/install_name_tool
 CELLAR=/usr/local/Cellar
 re="^$CELLAR/([^/]+)/[^/]+/(.*)$"
+# имя формулы из пути keg'а: .../usr/local/Cellar/<name>/<ver>
+SELF=$(basename "$(dirname "$KEG")")
 
 find "$KEG" -type f \( -perm -u+x -o -name '*.dylib' -o -name '*.so' -o -name '*.bundle' \) | while read -r f; do
   file -b "$f" | grep -q Mach-O || continue
   id=$(otool -D "$f" | sed -n 2p)
   if [[ $id =~ $re ]]; then
-    $INT -id "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f" 2>/dev/null
+    $INT -id "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f"
+  elif [ -n "$id" ] && [[ $id != */* ]]; then   # голое имя (так собирается icu4c)
+    $INT -id "/usr/local/opt/$SELF/lib/$id" "$f"
   fi
   otool -L "$f" | tail -n +2 | awk '{print $1}' | while read -r dep; do
-    [[ $dep =~ $re ]] || continue
-    $INT -change "$dep" "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f" 2>/dev/null
+    if [[ $dep =~ $re ]]; then
+      $INT -change "$dep" "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f"
+    elif [[ $dep != */* ]] && [ -e "$KEG/lib/$dep" ]; then
+      $INT -change "$dep" "/usr/local/opt/$SELF/lib/$dep" "$f"
+    fi
   done
   for rp in $(otool -l "$f" | awk '/cmd LC_RPATH/{getline; getline; print $2}'); do
     [[ $rp =~ $re ]] || continue
