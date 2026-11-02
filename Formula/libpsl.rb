@@ -16,6 +16,6 @@ class Libpsl < Formula
   end
 
   test do
-    assert_match "Public Suffix List", shell_output("#{bin}/psl --version 2>&1")
+    assert_match version.to_s, shell_output("#{bin}/psl --version 2>&1")
   end
 end
