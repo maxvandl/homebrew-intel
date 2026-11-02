@@ -68,6 +68,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libnghttp2` | 1.70.0 | HTTP/2 C Library. |
 | `libnghttp3` | 1.18.0 | HTTP/3 library written in C. |
 | `libngtcp2` | 1.25.0 | IETF QUIC protocol implementation. |
+| `tidy-html5` | 5.8.0 | Granddaddy of HTML tools, with support for modern standards. |
 
 ## Casks
 
