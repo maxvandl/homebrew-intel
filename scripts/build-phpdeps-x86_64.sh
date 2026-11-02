@@ -29,7 +29,7 @@ libsodium) get libsodium https://download.libsodium.org/libsodium/releases/libso
 json-c) get json-c https://s3.amazonaws.com/json-c_releases/releases/json-c-0.19.tar.gz
   $C json-c 0.19 $R/json-c/src -DBUILD_APPS=OFF > $L 2>&1; echo "json-c $?" ;;
 libpsl) get libpsl https://github.com/rockdaboot/libpsl/releases/download/0.23.3/libpsl-0.23.3.tar.gz
-  $A libpsl 0.23.3 $R/libpsl/src --disable-silent-rules --enable-builtin --enable-runtime=libicucore > $L 2>&1; echo "libpsl $?" ;;
+  $A libpsl 0.23.3 $R/libpsl/src --disable-silent-rules --enable-builtin --enable-runtime=libicucore am_cv_func_iconv_works=yes > $L 2>&1; echo "libpsl $?" ;;
 libssh2) get libssh2 https://libssh2.org/download/libssh2-1.11.1.tar.gz
   DEPS=openssl@4 $A libssh2 1.11.1 $R/libssh2/src --disable-silent-rules --disable-examples-build --with-openssl --with-libz \
     --with-libssl-prefix=/usr/local/opt/openssl@4 > $L 2>&1; echo "libssh2 $?" ;;
@@ -84,5 +84,17 @@ libzip) get libzip https://libzip.org/download/libzip-1.12.1.tar.xz
   DEPS="xz zstd" $C libzip 1.12.1 $R/libzip/src -DENABLE_GNUTLS=OFF -DENABLE_MBEDTLS=OFF -DBUILD_REGRESS=OFF -DBUILD_EXAMPLES=OFF -DENABLE_OPENSSL=OFF > $L 2>&1; echo "libzip $?" ;;
 tidy-html5) get tidy-html5 https://github.com/htacg/tidy-html5/archive/refs/tags/5.8.0.tar.gz
   CMAKE_POLICY_VERSION_MINIMUM=3.5 $C tidy-html5 5.8.0 $R/tidy-html5/src > $L 2>&1; echo "tidy-html5 $?" ;;
+apr) get apr "https://archive.apache.org/dist/apr/apr-1.7.6.tar.bz2"
+  MAKEARGS=-j1 $A apr 1.7.6 $R/apr/src > $L 2>&1; r=$?; k=$(K apr 1.7.6)
+  rm -f $k/lib/*.la $k/lib/*.exp; sed -i '' "s|/usr/local/Cellar/apr/1.7.6|/usr/local/opt/apr|g" $k/bin/apr-1-config; echo "apr $r"; optlink apr ;;
+apr-util) get apr-util "https://archive.apache.org/dist/apr/apr-util-1.6.5.tar.bz2"
+  DEPS="openssl@4" $A apr-util 1.6.5 $R/apr-util/src --with-apr=/usr/local/opt/apr --with-crypto --with-openssl=/usr/local/opt/openssl@4 --without-pgsql > $L 2>&1; r=$?
+  k=$(K apr-util 1.6.5); mkdir -p $k/libexec/lib; for f in $k/lib/*.dylib; do ln -sf ../../lib/$(basename $f) $k/libexec/lib/; done
+  find $k/lib \( -name '*.la' -o -name '*.exp' \) -delete; sed -i '' "s|/usr/local/Cellar/apr-util/1.6.5|/usr/local/opt/apr-util|g" $k/bin/apu-1-config; echo "apr-util $r"; optlink apr-util ;;
+net-snmp) get net-snmp https://downloads.sourceforge.net/project/net-snmp/net-snmp/5.9.5.2/net-snmp-5.9.5.2.tar.gz
+  DEPS="openssl@4" $A net-snmp 5.9.5.2 $R/net-snmp/src --disable-debugging --enable-ipv6 --with-defaults \
+    --with-persistent-directory=/usr/local/var/db/net-snmp --with-logfile=/usr/local/var/log/snmpd.log \
+    "--with-mib-modules=host ucd-snmp/diskio" --without-rpm --without-kmem-usage --disable-embedded-perl --without-perl-modules \
+    --with-openssl=/usr/local/opt/openssl@4 > $L 2>&1; echo "net-snmp $?"; optlink net-snmp ;;
 *) echo "unknown $x" ;;
 esac; done

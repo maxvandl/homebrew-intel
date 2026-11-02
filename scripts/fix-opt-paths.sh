@@ -21,12 +21,16 @@ find "$KEG" -type f \( -perm -u+x -o -name '*.dylib' -o -name '*.so' -o -name '*
     $INT -id "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f"
   elif [ -n "$id" ] && [[ $id != */* ]]; then   # голое имя (так собирается icu4c)
     $INT -id "/usr/local/opt/$SELF/lib/$id" "$f"
+  elif [[ $id == @rpath/* ]] && [ -e "$KEG/lib/${id#@rpath/}" ]; then   # @rpath/libX (argon2)
+    $INT -id "/usr/local/opt/$SELF/lib/${id#@rpath/}" "$f"
   fi
   otool -L "$f" | tail -n +2 | awk '{print $1}' | while read -r dep; do
     if [[ $dep =~ $re ]]; then
       $INT -change "$dep" "/usr/local/opt/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}" "$f"
     elif [[ $dep != */* ]] && [ -e "$KEG/lib/$dep" ]; then
       $INT -change "$dep" "/usr/local/opt/$SELF/lib/$dep" "$f"
+    elif [[ $dep == @rpath/* ]] && [ -e "$KEG/lib/${dep#@rpath/}" ] && ! otool -l "$f" | grep -q LC_RPATH; then
+      $INT -change "$dep" "/usr/local/opt/$SELF/lib/${dep#@rpath/}" "$f"
     fi
   done
   for rp in $(otool -l "$f" | awk '/cmd LC_RPATH/{getline; getline; print $2}'); do

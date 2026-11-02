@@ -55,6 +55,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `gobject-introspection` | 1.86.0 | Generate introspection data for GObject libraries. |
 | `aom` | 3.15.3 | Codec library for encoding and decoding AV1 video streams. |
 | `freetds` | 1.5.20 | Libraries to talk to Microsoft SQL Server and Sybase databases. |
+| `m4` | 1.4.21 | Macro processing language. |
 
 ## Casks
 

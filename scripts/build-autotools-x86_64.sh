@@ -22,7 +22,7 @@ for t in help2man; do
   printf '#!/bin/sh\nexec arch -arm64 /opt/homebrew/bin/%s "$@"\n' "$t" > "$ARMBIN/$t"; chmod +x "$ARMBIN/$t"
 done
 # то же для xcrun-обёрток /usr/bin, которых нет в CLT/usr/bin (libxcrun в CLT 27 только arm64)
-for t in mig; do
+for t in mig gcc cc; do   # gcc/cc — для build-утилит (CC_FOR_BUILD), им достаточно arm64
   printf '#!/bin/sh\nexec arch -arm64 /usr/bin/%s "$@"\n' "$t" > "$ARMBIN/$t"; chmod +x "$ARMBIN/$t"
 done
 export PATH=$ARMBIN:$CLT/usr/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin
