@@ -65,6 +65,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `oniguruma` | 6.9.10 | Regular expressions library. |
 | `autoconf` | 2.73 | Automatic configure script builder. |
 | `libtool` | 2.6.2 | Generic library support script. |
+| `libnghttp2` | 1.70.0 | HTTP/2 C Library. |
 
 ## Casks
 
