@@ -36,6 +36,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `node`    | 26.13.0 | Official darwin-x64 binary from nodejs.org, repackaged as a keg (npm included). No build needed. |
 | `c-ares` | 1.34.9 | Asynchronous DNS library. |
 | `simdjson` | 5.1.1 | SIMD-accelerated C++ JSON parser. |
+| `brotli` | 1.2.1 | Generic-purpose lossless compression algorithm by Google. |
 
 ## Casks
 
