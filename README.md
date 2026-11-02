@@ -88,6 +88,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `flock` | 0.4.0 | Lock file during command. |
 | `libevent` | 2.1.13 | Asynchronous event library. |
 | `utf8proc` | 2.12.0 | Clean C library for processing UTF-8 Unicode data. |
+| `ncurses` | 6.6 | Text-based UI library. |
 
 ## Casks
 
