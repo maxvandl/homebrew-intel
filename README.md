@@ -95,6 +95,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `beads` | 1.3.2 | Memory upgrade for your coding agent. |
 | `gascity` | 1.5.1 | Orchestration-builder SDK for multi-agent coding workflows. |
 | `httpd` | 2.4.69 | Apache HTTP server. |
+| `jemalloc` | 5.4.0 | Implementation of malloc emphasizing fragmentation avoidance. |
 
 ## Casks
 
