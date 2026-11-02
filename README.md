@@ -51,6 +51,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `unixodbc` | 2.3.14 | ODBC 3 connectivity for UNIX. |
 | `openexr` | 3.5.3 | High dynamic-range image file format. |
 | `krb5` | 1.22.2 | Network authentication protocol. |
+| `boost` | 1.92.0 | Collection of portable C++ source libraries. |
 
 ## Casks
 
