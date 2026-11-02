@@ -4,7 +4,7 @@
 # системные zlib/bzip2/curl). Компилятор — arm64 clang из CLT с "-arch x86_64";
 # bootstrap-cmake запускается через Rosetta.
 set -euo pipefail
-VER=4.4.4
+VER=4.4.5
 ROOT=/Users/lin/llvm/cmake
 SRC=$ROOT/cmake-$VER
 BLD=$ROOT/build
