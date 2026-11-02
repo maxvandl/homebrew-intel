@@ -76,6 +76,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libpq` | 18.6 | Postgres C API library. |
 | `libpsl` | 0.23.3 | C library for the Public Suffix List. |
 | `apr` | 1.7.6 | Apache Portable Runtime library. |
+| `apr-util` | 1.6.5 | Companion library to apr, the Apache Portable Runtime library. |
 
 ## Casks
 
