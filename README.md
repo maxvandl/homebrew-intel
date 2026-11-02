@@ -98,6 +98,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `jemalloc` | 5.4.0 | Implementation of malloc emphasizing fragmentation avoidance. |
 | `tmux` | 3.8 | Terminal multiplexer. |
 | `kubernetes-cli` | 1.37.2 | Kubernetes command-line interface. |
+| `net-snmp` | 5.9.5.2 | Implements SNMP v1, v2c, and v3, using IPv4 and IPv6. |
 
 ## Casks
 

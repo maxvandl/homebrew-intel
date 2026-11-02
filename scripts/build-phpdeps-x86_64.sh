@@ -122,5 +122,12 @@ jemalloc) get jemalloc https://github.com/jemalloc/jemalloc/releases/download/5.
 tmux) get tmux https://github.com/tmux/tmux/releases/download/3.8/tmux-3.8.tar.gz
   DEPS="libevent ncurses utf8proc jemalloc" $A tmux 3.8 $R/tmux/src --enable-jemalloc --enable-sixel --sysconfdir=/usr/local/etc --enable-utf8proc > $L 2>&1; r=$?
   mkdir -p $(K tmux 3.8)/share/tmux && cp $R/tmux/src/example_tmux.conf $(K tmux 3.8)/share/tmux/; echo "tmux $r" ;;
+libssh) get libssh https://www.libssh.org/files/0.12/libssh-0.12.2.tar.xz
+  DEPS=openssl@4 $C libssh 0.12.2 $R/libssh/src -DBUILD_STATIC_LIB=ON -DWITH_SYMBOL_VERSIONING=OFF > $L 2>&1; r=$?
+  cp $R/libssh/build/src/libssh.a $(K libssh 0.12.2)/lib/; echo "libssh $r"; optlink libssh ;;
+tree) get tree https://github.com/Old-Man-Programmer/tree/archive/refs/tags/2.3.2.tar.gz
+  k=$(K tree 2.3.2); rm -rf $R/tree/stage
+  (cd $R/tree/src && make CC="$CLT/usr/bin/clang -arch x86_64 -isysroot $CLT/SDKs/MacOSX26.sdk" LDFLAGS=-Wl,-headerpad_max_install_names &&
+   make install PREFIX=$k MANDIR=$k/share/man) > $L 2>&1; echo "tree $?" ;;
 *) echo "unknown $x" ;;
 esac; done
