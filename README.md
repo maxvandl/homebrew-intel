@@ -52,6 +52,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `openexr` | 3.5.3 | High dynamic-range image file format. |
 | `krb5` | 1.22.2 | Network authentication protocol. |
 | `boost` | 1.92.0 | Collection of portable C++ source libraries. |
+| `gobject-introspection` | 1.86.0 | Generate introspection data for GObject libraries. |
 
 ## Casks
 

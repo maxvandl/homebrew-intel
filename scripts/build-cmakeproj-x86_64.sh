@@ -22,6 +22,9 @@ for d in ${DEPS:-}; do
   PP="$PP;/usr/local/opt/$d"
   for p in lib/pkgconfig share/pkgconfig; do [ -d "/usr/local/opt/$d/$p" ] && PCDIRS="$PCDIRS:/usr/local/opt/$d/$p"; done
 done
+INC=""; LIBS=""
+for d in ${DEPS:-}; do INC="$INC -I/usr/local/opt/$d/include"; LIBS="$LIBS -L/usr/local/opt/$d/lib"; done
+export CFLAGS="${INC# }" CXXFLAGS="${INC# }" LDFLAGS="${LIBS# }"   # как superenv: -I/-L зависимостей
 export PKG_CONFIG_LIBDIR="$ROOT/deps/pkgconfig${PCDIRS}:/usr/local/Homebrew/Library/Homebrew/os/mac/pkgconfig/26"
 
 # OPTLINKS="openssl@4 ..." — keg'и этого tap, ещё не установленные в Intel-brew: на время сборки
