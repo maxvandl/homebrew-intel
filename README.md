@@ -70,6 +70,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libngtcp2` | 1.25.0 | IETF QUIC protocol implementation. |
 | `tidy-html5` | 5.8.0 | Granddaddy of HTML tools, with support for modern standards. |
 | `libzip` | 1.12.1 | C library for reading, creating, and modifying zip archives. |
+| `dav1d` | 1.5.4 | AV1 decoder targeted to be small and fast. |
 
 ## Casks
 
