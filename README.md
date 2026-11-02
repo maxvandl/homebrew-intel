@@ -56,6 +56,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `aom` | 3.15.3 | Codec library for encoding and decoding AV1 video streams. |
 | `freetds` | 1.5.20 | Libraries to talk to Microsoft SQL Server and Sybase databases. |
 | `m4` | 1.4.21 | Macro processing language. |
+| `pkgconf` | 3.0.10 | Package compiler and linker metadata toolkit. |
 
 ## Casks
 
