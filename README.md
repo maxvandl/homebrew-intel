@@ -79,6 +79,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `apr-util` | 1.6.5 | Companion library to apr, the Apache Portable Runtime library. |
 | `doctl` | 2.1.0 | Command-line tool for DigitalOcean. |
 | `gogcli` | 0.47.1 | Google Suite CLI. |
+| `aws-iam-authenticator` | 0.7.24 | Use AWS IAM credentials to authenticate to Kubernetes. |
 
 ## Casks
 
