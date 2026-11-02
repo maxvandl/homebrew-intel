@@ -77,6 +77,7 @@ On an Intel Mac drop the `arch -x86_64` prefix.
 | `libpsl` | 0.23.3 | C library for the Public Suffix List. |
 | `apr` | 1.7.6 | Apache Portable Runtime library. |
 | `apr-util` | 1.6.5 | Companion library to apr, the Apache Portable Runtime library. |
+| `doctl` | 2.1.0 | Command-line tool for DigitalOcean. |
 
 ## Casks
 

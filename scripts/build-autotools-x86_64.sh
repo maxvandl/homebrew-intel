@@ -53,5 +53,7 @@ make distclean >/dev/null 2>&1 || true
 ./configure --disable-debug --disable-dependency-tracking --prefix="$PREFIX" --libdir="$PREFIX/lib" "$@"
 make -j"$(sysctl -n hw.ncpu)" ${MAKEARGS:-}
 make install DESTDIR="$STAGE" ${MAKEARGS:-}
+# .la со ссылками на Cellar мешают сборке зависимых keg'ов; Homebrew (Cleaner) всё равно их удаляет
+find "$STAGE$PREFIX" -name '*.la' -delete
 /Users/lin/llvm/homebrew-intel/scripts/fix-opt-paths.sh "$STAGE$PREFIX"
 echo "Готово: $STAGE$PREFIX"

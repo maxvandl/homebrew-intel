@@ -97,5 +97,28 @@ net-snmp) get net-snmp https://downloads.sourceforge.net/project/net-snmp/net-sn
     --with-persistent-directory=/usr/local/var/db/net-snmp --with-logfile=/usr/local/var/log/snmpd.log \
     "--with-mib-modules=host ucd-snmp/diskio" --without-rpm --without-kmem-usage --disable-embedded-perl --without-perl-modules \
     --with-openssl=/usr/local/opt/openssl@4 > $L 2>&1; echo "net-snmp $?"; optlink net-snmp ;;
+jq) get jq https://github.com/jqlang/jq/releases/download/jq-1.8.2/jq-1.8.2.tar.gz
+  OPTLINKS=oniguruma DEPS=oniguruma $A jq 1.8.2 $R/jq/src --disable-silent-rules --disable-maintainer-mode > $L 2>&1; echo "jq $?" ;;
+flock) get flock https://github.com/discoteq/flock/releases/download/v0.4.0/flock-0.4.0.tar.xz
+  $A flock 0.4.0 $R/flock/src --disable-silent-rules > $L 2>&1; echo "flock $?" ;;
+libevent) get libevent https://github.com/libevent/libevent/releases/download/release-2.1.13-stable/libevent-2.1.13-stable.tar.gz
+  DEPS=openssl@4 $A libevent 2.1.13 $R/libevent/src --disable-debug-mode > $L 2>&1; echo "libevent $?"; optlink libevent ;;
+utf8proc) get utf8proc https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v2.12.0.tar.gz
+  $C utf8proc 2.12.0 $R/utf8proc/src -DBUILD_SHARED_LIBS=ON > $L 2>&1; echo "utf8proc $?"; optlink utf8proc ;;
+ncurses) get ncurses https://invisible-mirror.net/archives/ncurses/ncurses-6.6.tar.gz
+  P=/usr/local/Cellar/ncurses/6.6
+  TERMINFO= $A ncurses 6.6 $R/ncurses/src --enable-pc-files --with-pkg-config-libdir=$P/lib/pkgconfig --enable-sigwinch \
+    --enable-symlinks --enable-widec --with-shared --with-cxx-shared --with-gpm=no --without-ada > $L 2>&1; r=$?
+  k=$(K ncurses 6.6)
+  ( cd $k/lib && for n in form menu ncurses panel ncurses++; do ln -sf lib${n}w.6.dylib lib$n.dylib; ln -sf lib${n}w.6.dylib lib$n.6.dylib
+      ln -sf lib${n}w.a lib$n.a; ln -sf lib${n}w_g.a lib${n}_g.a; done; ln -sf libncurses.a libcurses.a; ln -sf libncurses.dylib libcurses.dylib
+    cd pkgconfig && for n in ncurses form menu panel; do ln -sf ${n}w.pc $n.pc; done )
+  ln -sf ncursesw6-config $k/bin/ncurses6-config; sed -i '' "s|$P|/usr/local/opt/ncurses|g" $k/bin/ncursesw6-config
+  ( cd $k/include && ln -sf ncursesw ncurses && for h in curses form ncurses panel term termcap; do ln -sf ncursesw/$h.h $h.h; done )
+  mkdir -p $k/share/ncurses && cp -R $R/ncurses/src/test $k/share/ncurses/ && cp $R/ncurses/src/{install-sh,config.sub,config.guess} $k/share/ncurses/test/
+  echo "ncurses $r"; optlink ncurses ;;
+tmux) get tmux https://github.com/tmux/tmux/releases/download/3.8/tmux-3.8.tar.gz
+  DEPS="libevent ncurses utf8proc" $A tmux 3.8 $R/tmux/src --enable-sixel --sysconfdir=/usr/local/etc --enable-utf8proc > $L 2>&1; r=$?
+  mkdir -p $(K tmux 3.8)/share/tmux && cp $R/tmux/src/example_tmux.conf $(K tmux 3.8)/share/tmux/; echo "tmux $r" ;;
 *) echo "unknown $x" ;;
 esac; done
