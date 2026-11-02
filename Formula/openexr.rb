@@ -21,6 +21,6 @@ class Openexr < Formula
 
   test do
     assert_path_exists lib/"libOpenEXR.dylib"
-    assert_match "Usage", shell_output("#{bin}/exrheader 2>&1", 1)
+    assert_match "Usage", shell_output("#{bin}/exrheader 2>&1", 255)
   end
 end
