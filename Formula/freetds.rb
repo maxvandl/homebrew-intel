@@ -10,6 +10,7 @@ class Freetds < Formula
 
   depends_on arch: :x86_64
   depends_on :macos
+  depends_on "maxvandl/intel/krb5"
   depends_on "maxvandl/intel/openssl@4"
   depends_on "maxvandl/intel/unixodbc"
 
