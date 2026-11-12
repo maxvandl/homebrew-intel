@@ -5,8 +5,8 @@
 class LlvmAT23 < Formula
   desc "Next-gen compiler infrastructure (prebuilt x86_64 keg)"
   homepage "https://llvm.org/"
-  url "https://github.com/maxvandl/homebrew-intel/releases/download/llvm-23.1.4/llvm-23.1.4-x86_64-macos.tar.gz"
-  sha256 "e8215133781845112d744ab75422cb2a00694a64e457769ed144885568435502"
+  url "https://github.com/maxvandl/homebrew-intel/releases/download/llvm-23.1.5/llvm-23.1.5-x86_64-macos.tar.gz"
+  sha256 "200ac7d2e5fb1e59567ada050180b3fab00c01837f9daae36a876149aaf54bd0"
   license "Apache-2.0" => { with: "LLVM-exception" }
 
   keg_only :versioned_formula
@@ -26,6 +26,7 @@ class LlvmAT23 < Formula
     touch clang_config_file_dir/".keepme"
     (prefix/"etc").install_symlink clang_config_file_dir
 
+    # Файлы в etc переживают uninstall, поэтому atomic_write, а не write (иначе upgrade падает).
     # Под Rosetta x86_64-шим xcrun не может загрузить libxcrun из arm64-only CLT,
     # поэтому SDK и настоящий линковщик передаём clang явно через конфиг-файлы.
     cfg = <<~CFG
@@ -33,8 +34,8 @@ class LlvmAT23 < Formula
       -B#{MacOS::CLT::PKG_PATH}/usr/bin
     CFG
     kernel_major = Utils.safe_popen_read("uname", "-r").split(".").first
-    (clang_config_file_dir/"x86_64-apple-darwin.cfg").write cfg
-    (clang_config_file_dir/"x86_64-apple-darwin#{kernel_major}.cfg").write cfg
+    (clang_config_file_dir/"x86_64-apple-darwin.cfg").atomic_write cfg
+    (clang_config_file_dir/"x86_64-apple-darwin#{kernel_major}.cfg").atomic_write cfg
   end
 
   def caveats
